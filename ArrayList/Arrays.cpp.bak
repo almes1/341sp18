@@ -1,0 +1,129 @@
+//
+// Created by almess1 on 9/10/17.
+//
+
+#include <iostream>
+#include "Arrays.h"
+
+// Create- Useless
+Arrays::Arrays() {
+    array = 0; // memory location 0 (c++ 11 == nullptr)
+    array_size = 0;
+    num_items = 0;
+}
+
+// Create- Useful
+Arrays::Arrays(uint initial_size) {
+    array = new int[initial_size];
+    array_size = initial_size;
+    num_items = 0;
+}
+
+// Delete
+Arrays::~Arrays() {
+    if (array != 0) {
+        delete[] array;
+        array = NULL;
+    }
+}
+
+// Copy Constructor- Deep copy
+Arrays::Arrays(const Arrays &other) {
+    array = new int[other.num_items];
+    num_items = other.num_items;
+    array_size = num_items;
+    for(int i = 0; i < other.num_items; ++i){
+        array[i] = other.array[i];
+    }
+}
+
+int Arrays::Find(int needle) {
+    std::cout << "Attempting to find " << needle << std::endl;
+    // Search for needle in haystack
+    for(int i = 0; i < num_items; ++i){
+        if (array[i] == needle){
+            std::cout << "Found at position: " << i << std::endl;
+            return i;
+        }
+    }
+
+    std::cout << "Not found." << std::endl;
+    return -1;
+}
+
+void Arrays::Remove(int needle) {
+    std::cout << "Attempting to remove " << needle << std::endl;
+    int i = Find(needle);
+
+    // Not in list, abort
+    if (i < 0)
+        return;
+
+    --num_items;
+    // Needle was found, shift 'left'
+    for(i; i < num_items; ++i){
+        array[i] = array[i+1];
+    }
+
+    // How could we remove all needles?
+    Remove(needle);
+}
+
+void Arrays::Insert(int x, uint position) {
+    std::cout << "Attempting to Insert " << x << " at position: " << position << std::endl;
+    if (position > num_items){
+        // Position is bad throw exception
+        std::cout << "Last available index: " << num_items << std::endl;
+        throw "Invalid list position.";
+    }
+
+    // We're full, need to make room
+    if(array_size <= num_items){
+        std::cout << "Expanding array from " << num_items << " to " << num_items * 2 << std::endl;
+
+        int* oldArray = array;
+        array = new int[array_size * 2];
+
+        for(int i = 0; i < array_size; ++i){
+            array[i] = oldArray[i];
+        }
+        delete[] oldArray;
+
+        // Don't forget to update array num_items!
+        array_size *= 2;
+    }
+
+    // Shift all elements after the insert to the 'right'
+    int swap = x;
+    for(int k = position; k <= num_items; ++k){
+        int nextSwap = array[k];
+        array[k] = swap;
+        swap = nextSwap;
+    }
+
+    num_items += 1;
+}
+
+int Arrays::FindKth(uint k) {
+    std::cout << "Finding item at position: " << k << std::endl;
+    if(k >= 0 && k < num_items) {
+        std::cout << "Found " << array[k] << std::endl;
+        return array[k];
+    }
+    throw "Index out of bounds";
+}
+
+void Arrays::Print() {
+    std::cout << "[";
+
+    // Print out 0 .. N-1
+    for(int i = 0; i < (int)num_items - 1; ++i){
+        std::cout << array[i] << ", ";
+    }
+
+    // Print out last item (without comma)
+    if (num_items > 0) // watch out for empty list!
+        std::cout << array[num_items -1];
+
+    std::cout << "] Size: " << num_items << ", ArraySize: " << array_size << std::endl;
+}
