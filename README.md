@@ -7,7 +7,7 @@ These data structures (and test cases) are not necessarily complete nor optimize
 # Downloading Code
 ## Option 1 (Preferred) 
 Using the git tool.
-1. Install '[git](https://git-scm.com/)'
+1. Install [git](https://git-scm.com/)
 2. Clone this repository via
 
 `git clone https://github.com/almes1/341sp18.git`
@@ -36,7 +36,7 @@ cmake ..
 make -j4
 ArrayList/arrayList
 ```
-## Step by step
+## What just happened?
 1. Move to the directory containing the files that will be used to build the executable.
 2. Create a directory to store the binary files (not source files)
 3. Move to that directory
