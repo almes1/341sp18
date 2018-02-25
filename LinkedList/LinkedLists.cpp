@@ -2,6 +2,7 @@
 // Created by almess1 on 9/10/17.
 //
 
+#include <iostream>
 #include "LinkedLists.h"
 
 
@@ -47,7 +48,15 @@ void LinkedLists::Remove(int needle) {
 
     while(current != NULL) {
         if (current->data == needle) {
-            // TODO: in class
+            if(previous == NULL){
+                head = current->next;
+            }else {
+                previous->next = current->next;
+            }
+            current->next = NULL;
+            delete current;
+            size --;
+            return;
         }
         previous = current;
     }
@@ -58,15 +67,67 @@ void LinkedLists::Insert(int x, uint position) {
         throw "Out of bounds";
     }
 
-    for(int i = 0; i < position; ++i){
-        // TODO: in class
+    node* current = head;
+    node* node_x = new node(x);
+    if(position == 0){
+        head = node_x;
+        node_x->next = current;
+        size++;
+        return;
     }
+
+    for(int i = 0; i < position - 1; ++i){
+        if(current->next) {
+            current = current->next;
+        }else{
+            throw "Bad pointer";
+        }
+    }
+    if(current) {
+        node_x->next = current->next;
+        current->next = node_x;
+        size ++;
+        return;
+    }
+    throw "Another pointer error";
 
 }
 
 void LinkedLists::Append(int append_me) {
     Insert(append_me, size);
 }
+
+int LinkedLists::FindKth(uint k) {
+    if(k >= size){
+        throw "Out of bounds";
+    }
+
+    node* current = head;
+    for(int i = 0; i < k; ++i){
+        if(current->next) {
+            current = current->next;
+        }else{
+            throw "Bad pointer";
+        }
+    }
+    if(current) {
+        return current->data;
+    }
+
+    throw "Another pointer error";
+}
+
+void LinkedLists::Print() {
+    node* current = head;
+    while(current != NULL) {
+        std::cout << current->data << "-> ";
+        current = current->next;
+    }
+    std::cout << "NULL" << std::endl;
+
+}
+
+
 
 /*
  * Meat of remove
