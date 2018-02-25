@@ -5,13 +5,10 @@
 #ifndef UMBC_LINKED_LISTS_H
 #define UMBC_LINKED_LISTS_H
 
-
-#include <zconf.h>
-
 class node {
     friend class LinkedLists;
     int data;
-    node *next = NULL;
+    node *next;
 
     explicit node(int data){
         this->data = data;
@@ -26,7 +23,7 @@ class node {
 
 class LinkedLists {
     node* head;
-    uint size;
+    unsigned int size;
 
 public:
     // Create
@@ -42,7 +39,7 @@ public:
 
     void Remove(int needle);
 
-    void Insert(int x, uint position);
+    void Insert(int x, unsigned int position);
 
     bool IsEmpty() { return size == 0; }
 
@@ -51,7 +48,7 @@ public:
     void MakeEmpty() { size = 0; }
 
     // TODO: in class
-    int FindKth(uint k);
+    int FindKth(unsigned int k);
 
     void Append(int append_me);
 

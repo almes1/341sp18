@@ -3,10 +3,6 @@
 //
 #include <iostream>
 #include "Arrays.h"
-// class Arrays {
-//    int* array;
-//    uint num_items;
-//    uint array_size;
 
 // Create
 Arrays::Arrays() {
@@ -15,7 +11,7 @@ Arrays::Arrays() {
     array = NULL;
 }
 
-Arrays::Arrays(uint initial_size) {
+Arrays::Arrays(unsigned int initial_size) {
     num_items = 0;
     array_size = initial_size;
     array = new int[array_size];
@@ -63,7 +59,7 @@ void Arrays::Remove(int needle) {
     Remove(needle);
 }
 
-void Arrays::Insert(int x, uint position) {
+void Arrays::Insert(int x, unsigned int position) {
     if (position >= array_size) {
         throw "Out of bounds error";
     }
@@ -80,7 +76,7 @@ void Arrays::Insert(int x, uint position) {
     array[position] = x;
 }
 
-int Arrays::FindKth(uint k) {
+int Arrays::FindKth(unsigned int k) {
     if (k >= num_items) {
         throw "Index out of bounds";
     }

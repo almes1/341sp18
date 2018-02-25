@@ -53,7 +53,7 @@ void LinkedLists::Remove(int needle) {
     }
 }
 
-void LinkedLists::Insert(int x, uint position) {
+void LinkedLists::Insert(int x, unsigned int position) {
     if (position > size){
         throw "Out of bounds";
     }
@@ -66,6 +66,21 @@ void LinkedLists::Insert(int x, uint position) {
 
 void LinkedLists::Append(int append_me) {
     Insert(append_me, size);
+}
+
+int LinkedLists::FindKth(unsigned int k){
+  if(k < size){
+    node* tmp = head;
+    int i = 0;
+    while(tmp != NULL && i <= k){
+      if(k == i){
+        return tmp->data;
+      }
+      tmp = tmp->next;
+    }
+    throw "Error walking list";
+  }
+  throw "Overflow Error";
 }
 
 /*
