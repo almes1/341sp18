@@ -5,40 +5,30 @@ struct Node{
     int value;
     Node *left;
     Node *right;
-    Node* parent;
 
     explicit Node(int val);
     Node(int val, Node* left, Node* right);
     Node(const Node& other);
-    bool find(int needle);
-
-    int height();
-    bool remove(int needle);
+    ~Node();
+    bool find(int needle) const;
+    int getHeight() const;
+    
+    int findMinValue();
+    int findMaxValue();
+    
+    bool remove(int needle, Node** parentRelation);
     void insert(int newValue);
 
-    void print();
-
-    ~Node();
+    void print() const;
+private:
+  Node * findMin();
+  Node * findMax();
 
 };
 
 class BST {
-
-private:
     Node *root;
     int size;
-
-    void addHelper(Node *root, int val){throw "Not implemented";}
-
-    void printHelper(Node *root){throw "Not implemented";}
-
-    int nodesCountHelper(Node *root){throw "Not implemented";}
-
-    int heightHelper(Node *root){throw "Not implemented";}
-
-    void printMaxPathHelper(Node *root){throw "Not implemented";}
-
-    bool deleteValueHelper(Node *parent, Node *current, int value){throw "Not implemented";}
 
 public:
     BST();

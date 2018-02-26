@@ -55,7 +55,7 @@ void Node::insert(int newValue) {
     }
 }
 
-bool Node::find(int needle) {
+bool Node::find(int needle) const{
     if(needle == value){
         return true;
     }
@@ -72,7 +72,31 @@ bool Node::find(int needle) {
     return false;
 }
 
-void Node::print() {
+int Node::findMinValue(){
+  Node* min = findMin();
+  return min->value;
+}
+
+int Node::findMaxValue(){
+  Node* max = findMax();
+  return max->value;
+}
+
+Node* Node::findMin(){
+  if(left != NULL){
+    return left->findMin();
+  }
+  return this;
+}
+
+Node* Node::findMax(){
+  if(right != NULL){
+    return right->findMax();
+  }
+  return this;
+}
+
+void Node::print() const{
     if(left != NULL) {
         left->print();
     }
@@ -82,12 +106,54 @@ void Node::print() {
     }
 }
 
-int Node::height() {
+int Node::getHeight() const{
     throw "Not implemented";
 }
 
-bool Node::remove(int needle) {
-    throw "Implemented";
+bool Node::remove(int needle, Node** parentRelation) {
+  if(value > needle){
+    // Potentially in left subtree
+    if (left != NULL){
+      return left->remove(needle, &left);
+    }
+  }else if(value < needle){
+    // Potentially in right subtree
+    if (right != NULL){
+      return right->remove(needle, &right);
+    }
+  }else{
+    // Found needle!
+    if (left == NULL && right == NULL){
+      // I have no children, nothing to pass to parent
+      *parentRelation = NULL;
+    }else if (left != NULL){
+      if(right != NULL){
+       // swap current value with replacement (max of left subtree or min of right subtree)
+       Node* replacement = left->findMax();
+       value = replacement->value;
+       replacement->value = needle;
+       // delete the child, not this node
+       return left->remove(needle, &left);
+      }else{
+        // only a left child
+        *parentRelation = left;
+      }
+    }else{
+      // only a right child
+      *parentRelation = right;
+    }
+    
+    // prevent filicide (killing of children)
+    left = NULL;
+    right = NULL;
+    
+    // cleanup memory
+    delete this;
+    return true;
+  }
+  // There was no left/right child, therefor needle is not in haystack
+  return false;
+    
 }
 
 BST::BST() {
@@ -141,9 +207,9 @@ int BST::height() {
 
 bool BST::remove(int value) {
     if (root != NULL){
-        if(root->remove(value)){
+        if(root->remove(value, &root)){
           size--;
-          return root->remove(value);
+          return true;
         }
     }
   return false;
