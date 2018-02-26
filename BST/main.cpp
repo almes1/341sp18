@@ -58,7 +58,7 @@ int main() {
         // Test removed 5
         if (bst->isEmpty() || bst->get_size() != node_count) {
             bst->print();
-            throw "Tree should not contain 5, or is now the wrong size";
+            throw "Tree is now the wrong size";
         }
 
     }catch(const char * err){
