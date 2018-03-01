@@ -55,12 +55,11 @@ public:
         return size;
     };
 
-
     int height(Node *p);
 
     bool remove(int value);
 
-    void printTree() ;
+    void print() ;
 
     void printRow(const Node *p, const int height, int depth) ;
 

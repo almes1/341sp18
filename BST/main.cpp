@@ -25,7 +25,6 @@ int main() {
         if (!bst->find(5) || bst->isEmpty()) {
             throw "Tree should have a 5";
         }
-
         // remove node with no child
         if(!bst->remove(5)){
             throw "5 could not be removed...";
@@ -36,28 +35,23 @@ int main() {
         if(bst->remove(5)){
             throw "Deleted 5 successfully twice...";
         }
-        
         // Remove node with 1 child, try again
         if(!bst->remove(-1) || bst->remove(-1)){
             throw "Did not successfully remove/unlink node with 1 child";
         }
         node_count--;
-        
         // remove node with 2 children, try again
         if(!bst->remove(1) || bst->remove(1)){
             throw "Did not successfully remove/unlink node with 2 children";
         }
         node_count--;
-        
         // remove root
         if(!bst->remove(11) || bst->remove(11)){
             throw "Did not successfully remove/unlink root node";
         }
         node_count--;
-        
         // Test removed 5
         if (bst->isEmpty() || bst->get_size() != node_count) {
-            bst->print();
             throw "Tree is now the wrong size";
         }
 

@@ -97,10 +97,10 @@ Node* Node::findMax(){
 }
 
 void Node::print() const{
-  std::cout << " " << value << " " << std::endl;
     if(left != NULL) {
         left->print();
     }
+    std::cout << " " << value << " " << std::endl;
     if(right != NULL) {
         right->print();
     }
@@ -142,18 +142,15 @@ bool Node::remove(int needle, Node** parentRelation) {
       // only a right child
       *parentRelation = right;
     }
-
     // prevent filicide (killing of children)
     left = NULL;
     right = NULL;
-
     // cleanup memory
     delete this;
     return true;
   }
   // There was no left/right child, therefor needle is not in haystack
   return false;
-
 }
 
 BST::BST() {
@@ -196,7 +193,6 @@ int BST::height(Node *p) {
   int leftHeight = height(p->left);
   int rightHeight = height(p->right);
   return (leftHeight > rightHeight) ? leftHeight + 1: rightHeight + 1;
-
 }
 
 bool BST::remove(int value) {
@@ -219,7 +215,7 @@ bool BST::remove(int value) {
   -10   5
 */
 // create a pretty vertical tree
-void BST::printTree()
+void BST::print()
 {
   int h = height(root) + 1;
   for (int i = 0 ; i < h; i ++) {
