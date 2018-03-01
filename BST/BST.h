@@ -33,7 +33,7 @@ private:
 };
 
 class BST {
-public:
+
     Node *root;
     int size;
 
