@@ -18,6 +18,7 @@ int main() {
         bst->add(-10);
         bst->add(100);
         bst->add(5);
+        bst->print();
 
         node_count += 7;
 
@@ -54,6 +55,8 @@ int main() {
         if (bst->isEmpty() || bst->get_size() != node_count) {
             throw "Tree is now the wrong size";
         }
+
+        bst->print();
 
     }catch(const char * err){
         std::cerr << "TESTING ERROR" << std::endl;
