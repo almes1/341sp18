@@ -1,19 +1,22 @@
 //
 // Created by almess1 on 9/10/17.
 //
+#ifndef UMBC_LINKED_LISTS_CPP
+#define UMBC_LINKED_LISTS_CPP
 
 #include <iostream>
 #include "LinkedLists.h"
 
-
-LinkedLists::~LinkedLists() {
+template <class T>
+LinkedLists<T>::~LinkedLists() {
     if (head != NULL){
         delete head;
         head = NULL;
     }
 }
 
-LinkedLists::LinkedLists(const LinkedLists &other) {
+template <class T>
+LinkedLists<T>::LinkedLists(const LinkedLists<T> &other) {
     //size = other.size;
     size = 0;
 
@@ -22,16 +25,17 @@ LinkedLists::LinkedLists(const LinkedLists &other) {
         return;
     }
 
-    node* tmp = other.head;
-    head = new node(tmp->data);
+    node<T>* tmp = other.head;
+    head = new node<T>(tmp->data);
     while (tmp->next != NULL){
         tmp = tmp->next;
-        head->next = new node(tmp->data);
+        head->next = new node<T>(tmp->data);
     }
 }
 
-const node* LinkedLists::Find(int needle) {
-    node* tmp = head;
+template <class T>
+const node<T>* LinkedLists<T>::Find(T needle) {
+    node<T>* tmp = head;
     int i = 0;
     while(tmp != NULL){
         if (tmp->data == needle){
@@ -42,9 +46,10 @@ const node* LinkedLists::Find(int needle) {
     return NULL;
 }
 
-void LinkedLists::Remove(int needle) {
-    node* current = head;
-    node* previous = NULL;
+template <class T>
+void LinkedLists<T>::Remove(T needle) {
+    node<T>* current = head;
+    node<T>* previous = NULL;
 
     while(current != NULL) {
         if (current->data == needle) {
@@ -62,13 +67,14 @@ void LinkedLists::Remove(int needle) {
     }
 }
 
-void LinkedLists::Insert(int x, unsigned int position) {
+template <class T>
+void LinkedLists<T>::Insert(T x, unsigned int position) {
     if (position > size){
         throw "Out of bounds";
     }
 
-    node* current = head;
-    node* node_x = new node(x);
+    node<T>* current = head;
+    node<T>* node_x = new node<T>(x);
     if(position == 0){
         head = node_x;
         node_x->next = current;
@@ -90,19 +96,20 @@ void LinkedLists::Insert(int x, unsigned int position) {
         return;
     }
     throw "Another pointer error";
-
 }
 
-void LinkedLists::Append(int append_me) {
+template <class T>
+void LinkedLists<T>::Append(T append_me) {
     Insert(append_me, size);
 }
 
-int LinkedLists::FindKth(unsigned int k) {
+template <class T>
+T LinkedLists<T>::FindKth(unsigned int k) {
     if(k >= size){
         throw "Out of bounds";
     }
 
-    node* current = head;
+    node<T>* current = head;
     for(int i = 0; i < k; ++i){
         if(current->next) {
             current = current->next;
@@ -117,8 +124,9 @@ int LinkedLists::FindKth(unsigned int k) {
     throw "Another pointer error";
 }
 
-void LinkedLists::Print() {
-    node* current = head;
+template <class T>
+void LinkedLists<T>::Print() {
+    node<T>* current = head;
     while(current != NULL) {
         std::cout << current->data << "-> ";
         current = current->next;
@@ -126,3 +134,5 @@ void LinkedLists::Print() {
     std::cout << "NULL" << std::endl;
 
 }
+
+#endif

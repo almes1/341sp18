@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include "LinkedLists.h"
 
 bool tests();
@@ -13,12 +14,13 @@ bool tests() {
     try {
         int global_counter = 0;
 
-        LinkedLists someBuff = LinkedLists();
+        LinkedLists<node<int> > someBuff = LinkedLists<node<int> >();
 
         // Expect to see []
         someBuff.Print();
 
-        while (!someBuff.IsFull())
+        int five = 5;
+        while (five--)
             someBuff.Insert(global_counter, global_counter++);
 
         std::cout << "List is full." << std::endl;
@@ -61,4 +63,5 @@ bool tests() {
         return false;
     }
     return true;
+
 }

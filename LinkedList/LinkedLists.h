@@ -5,12 +5,12 @@
 #ifndef UMBC_LINKED_LISTS_H
 #define UMBC_LINKED_LISTS_H
 
-class node {
-    friend class LinkedLists;
-    int data;
+template <class T>
+struct node {
+    T data;
     node *next;
 
-    explicit node(int data){
+    explicit node(T data){
         this->data = data;
     };
 
@@ -21,8 +21,9 @@ class node {
     }
 };
 
+template <class T>
 class LinkedLists {
-    node* head;
+    node<T>* head;
     unsigned int size;
 
 public:
@@ -35,11 +36,11 @@ public:
     // Copy
     LinkedLists(const LinkedLists &other);
 
-    const node* Find(int needle);
+    const node<T>* Find(T needle);
 
-    void Remove(int needle);
+    void Remove(T needle);
 
-    void Insert(int x, unsigned int position);
+    void Insert(T x, unsigned int position);
 
     bool IsEmpty() { return size == 0; }
 
@@ -48,12 +49,13 @@ public:
     void MakeEmpty() { size = 0; }
 
     // TODO: in class
-    int FindKth(unsigned int k);
+    T FindKth(unsigned int k);
 
-    void Append(int append_me);
+    void Append(T append_me);
 
     // TODO: in class
     void Print();
 };
 
+#include "LinkedLists.cpp"
 #endif //UMBC_LINKED_LISTS_H
