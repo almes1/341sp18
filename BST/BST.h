@@ -1,6 +1,12 @@
 #include <iostream>
 #include <cmath>
 
+#include <cstdlib>
+#include <queue>
+#include <iomanip>
+
+using namespace std;
+
 struct Node{
     int value;
     Node *left;
@@ -12,10 +18,10 @@ struct Node{
     ~Node();
     bool find(int needle) const;
     int getHeight() const;
-    
+
     int findMinValue();
     int findMaxValue();
-    
+
     bool remove(int needle, Node** parentRelation);
     void insert(int newValue);
 
@@ -27,6 +33,7 @@ private:
 };
 
 class BST {
+
     Node *root;
     int size;
 
@@ -48,9 +55,14 @@ public:
         return size;
     };
 
-    void print();
-
-    int height();
+    int height(Node *p);
 
     bool remove(int value);
+
+    void print() ;
+
+    void printRow(const Node *p, const int height, int depth) ;
+
+    void getLine(const Node *root, int depth, vector<int>& vals) ;
+
 };

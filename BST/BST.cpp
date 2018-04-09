@@ -142,18 +142,15 @@ bool Node::remove(int needle, Node** parentRelation) {
       // only a right child
       *parentRelation = right;
     }
-    
     // prevent filicide (killing of children)
     left = NULL;
     right = NULL;
-    
     // cleanup memory
     delete this;
     return true;
   }
   // There was no left/right child, therefor needle is not in haystack
   return false;
-    
 }
 
 BST::BST() {
@@ -191,18 +188,11 @@ bool BST::find(int val) {
     return false;
 }
 
-void BST::print() {
-    std::cout << "Tree output" << std::endl;
-    if(root != NULL){
-        root->print();
-    }
-    else{
-        std::cout << "<TREE Empty >" << std::endl;
-    }
-}
-
-int BST::height() {
-    throw "Not implemented";
+int BST::height(Node *p) {
+  if (!p) return 0;
+  int leftHeight = height(p->left);
+  int rightHeight = height(p->right);
+  return (leftHeight > rightHeight) ? leftHeight + 1: rightHeight + 1;
 }
 
 bool BST::remove(int value) {
@@ -213,4 +203,66 @@ bool BST::remove(int value) {
         }
     }
   return false;
+}
+
+/*
+        11
+       /   \
+       1   100
+     /   \
+    -1   6
+    /   /
+  -10   5
+*/
+// create a pretty vertical tree
+void BST::print()
+{
+  int h = height(root) + 1;
+  for (int i = 0 ; i < h; i ++) {
+     printRow(root, h, i);
+  }
+}
+
+void BST::printRow(const Node *p, const int h, int depth)
+{
+        vector<int> vec;
+        int placeholder = 0;
+        getLine(p, depth, vec);
+        cout << setw((h - depth)*2); // scale setw with depth
+        bool toggle = true; // start with left
+        if (vec.size() > 1) {
+                for (int i = 0 ; i < vec.size() ; i++ ) {
+                        if (vec[i] != placeholder) {
+                                if (toggle)
+                                        cout << "/" << "   ";
+                                else
+                                        cout << "\\" << "   ";
+                        }
+                        toggle = !toggle;
+                }
+                cout << endl;
+                cout << setw((h - depth)*2);
+        }
+        for (int i = 0 ; i < vec.size() ; i++ ) {
+                if (vec[i] != placeholder)
+                        cout << vec[i] << "   ";
+        }
+        cout << endl;
+}
+
+void BST::getLine(const Node *root, int depth, vector<int>& vals)
+{
+  int placeholder = 0;
+        if (depth <= 0 && root != NULL) {
+                vals.push_back(root->value);
+                return;
+        }
+        if (root->left != NULL)
+                getLine(root->left, depth-1, vals);
+        else if (depth-1 <= 0)
+                vals.push_back(placeholder);
+        if (root->right != NULL)
+                getLine(root->right, depth-1, vals);
+        else if (depth-1 <= 0)
+                vals.push_back(placeholder);
 }
