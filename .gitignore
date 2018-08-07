@@ -35,3 +35,11 @@
 .idea/
 cmake-build-debug/
 
+# Visual Studios
+.vscode/
+
+# Tests and Junk
+Test/
+
+# Project Data
+CircularBuffers/

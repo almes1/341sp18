@@ -1,0 +1,109 @@
+class BST {
+
+private:
+    Node *root;
+
+    void addHelper(Node *root, int val) {
+        if (root->value > val) {
+            if (!root->left) {
+                root->left = new Node(val);
+            } else {
+                addHelper(root->left, val);
+            }
+        } else {
+            if (!root->right) {
+                root->right = new Node(val);
+            } else {
+                addHelper(root->right, val);
+            }
+        }
+    }
+
+    void printHelper(Node *root) {
+        if (!root) return;
+        printHelper(root->left);
+        std::cout << root->value << ' ';
+        printHelper(root->right);
+    }
+
+    int nodesCountHelper(Node *root) {
+        if (!root) return 0;
+        else return 1 + nodesCountHelper(root->left) + nodesCountHelper(root->right);
+    }
+
+    int heightHelper(Node *root) {
+        if (!root) return 0;
+        else return 1 + std::max(heightHelper(root->left), heightHelper(root->right));
+    }
+
+    void printMaxPathHelper(Node *root) {
+        if (!root) return;
+        std::cout << root->value << ' ';
+        if (heightHelper(root->left) > heightHelper(root->right)) {
+            printMaxPathHelper(root->left);
+        } else {
+            printMaxPathHelper(root->right);
+        }
+    }
+
+    bool deleteValueHelper(Node *parent, Node *current, int value) {
+        if (!current) return false;
+        if (current->value == value) {
+            if (current->left == NULL || current->right == NULL) {
+                Node *temp = current->left;
+                if (current->right) temp = current->right;
+                if (parent) {
+                    if (parent->left == current) {
+                        parent->left = temp;
+                    } else {
+                        parent->right = temp;
+                    }
+                } else {
+                    this->root = temp;
+                }
+            } else {
+                Node *validSubs = current->right;
+                while (validSubs->left) {
+                    validSubs = validSubs->left;
+                }
+                int temp = current->value;
+                current->value = validSubs->value;
+                validSubs->value = temp;
+                return deleteValueHelper(current, current->right, temp);
+            }
+            delete current;
+            return true;
+        }
+        return deleteValueHelper(current, current->left, value) ||
+               deleteValueHelper(current, current->right, value);
+    }
+
+public:
+    void add(int val) {
+        if (root) {
+            this->addHelper(root, val);
+        } else {
+            root = new Node(val);
+        }
+    }
+
+    void print() {
+        printHelper(this->root);
+    }
+
+    int nodesCount() {
+        return nodesCountHelper(root);
+    }
+
+    int height() {
+        return heightHelper(this->root);
+    }
+
+    void printMaxPath() {
+        printMaxPathHelper(this->root);
+    }
+
+    bool deleteValue(int value) {
+        return this->deleteValueHelper(NULL, this->root, value);
+    }
+};
