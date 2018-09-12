@@ -60,5 +60,6 @@ bool tests() {
         std::cout << "Unknown critical error occurred during test:\n" << message << std::endl;
         return false;
     }
+    std::cout << "All tests succeeded" << std::endl;
     return true;
 }
